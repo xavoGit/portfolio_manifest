@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wallet-service
+  namespace: myapp
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+  selector:
+    app: wallet-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wallet-container
+  namespace: myapp
+  labels:
+    app: wallet-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wallet-app
+  template:
+    metadata:
+      labels:
+        app: wallet-app
+    spec:
+      containers:
+      - name: wallet-container
+        image: 580044464645.dkr.ecr.us-east-1.amazonaws.com/portfolio_wallet:1
+        imagePullPolicy: Always
+        ports:
+          - name: web
+            containerPort: 8080
+      imagePullSecrets:
+          - name: regcred

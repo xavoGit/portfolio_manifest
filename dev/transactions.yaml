@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: transactions-service
+  namespace: myapp
+spec:
+  type: NodePort
+  ports:
+  - port: 8081
+  selector:
+    app: transactions-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transactions-container
+  namespace: myapp
+  labels:
+    app: transactions-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transactions-app
+  template:
+    metadata:
+      labels:
+        app: transactions-app
+    spec:
+      containers:
+      - name: transactions-container
+        image: 580044464645.dkr.ecr.us-east-1.amazonaws.com/portfolio_transactions:1
+        imagePullPolicy: Always
+        ports:
+          - name: web
+            containerPort: 8081
+      imagePullSecrets:
+          - name: regcred
