@@ -1,0 +1,25 @@
+node {
+  stage('Clone repository') {
+    checkout scm
+  }
+  stage('Update manifest.yml') {
+    script {
+      catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+        withCredentials([usernamePassword(credentialsId: 'xavogit', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+          sh "git config user.email @gmail.com"
+          sh "git config user.name Jenkins Job"
+          if (${MODULE} == 'transactions') {
+            sh "sed -i 's+portfolio_transactions.*+portfolio_transactions:${DOCKERTAG}+g' dev/transactions.yaml"
+          }
+          if (${MODULE} == 'wallet') {
+            sh "sed -i 's+portfolio_wallet.*+portfolio_wallet:${DOCKERTAG}+g' dev/wallet.yaml"
+          }
+          
+          sh "git add ."
+          sh "git commit -m 'update ${MODULE} module with version: ${env.BUILD_NUMBER}' by Jenkins"
+          sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/echo_java_manifest.git HEAD:main"
+        }
+      }
+    }
+  }
+}
