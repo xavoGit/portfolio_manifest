@@ -29,8 +29,10 @@ spec:
     spec:
       containers:
       - name: eureka-container
-        image: springcloud/eureka
+        image: 580044464645.dkr.ecr.us-east-1.amazonaws.com/portfolio_eurekas:2
         imagePullPolicy: Always
         ports:
           - name: web
             containerPort: 8761
+      imagePullSecrets:
+          - name: regcred
