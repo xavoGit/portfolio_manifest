@@ -9,10 +9,10 @@ node {
           sh "git config user.email @gmail.com"
           sh "git config user.name Jenkins Job"
           echo "${MODULE} module updated to version: ${DOCKERTAG}"
-          if (${MODULE} == 'transactions') {
+          if (MODULE == 'transactions') {
             sh "sed -i 's+portfolio_transactions.*+portfolio_transactions:${DOCKERTAG}+g' dev/transactions.yaml"
           }
-          if (${MODULE} == 'wallet') {
+          if (MODULE == 'wallet') {
             sh "sed -i 's+portfolio_wallet.*+portfolio_wallet:${DOCKERTAG}+g' dev/wallet.yaml"
           }
           
