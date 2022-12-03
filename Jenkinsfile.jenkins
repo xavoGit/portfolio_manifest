@@ -17,8 +17,8 @@ node {
           }
           
           sh "git add ."
-          sh "git commit -m 'update ${MODULE} module with version: ${env.BUILD_NUMBER}' by Jenkins"
-          sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/echo_java_manifest.git HEAD:main"
+          sh "git commit -m 'update ${MODULE} module with version: ${env.BUILD_NUMBER} by Jenkins'"
+          sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/portfolio_manifest.git HEAD:main"
         }
       }
     }
