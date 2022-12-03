@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
       - name: wallet-container
-        image: 580044464645.dkr.ecr.us-east-1.amazonaws.com/portfolio_wallet:3
+        image: 580044464645.dkr.ecr.us-east-1.amazonaws.com/portfolio_wallet:4
         imagePullPolicy: Always
         ports:
           - name: web
